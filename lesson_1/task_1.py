@@ -32,17 +32,19 @@ work_list = [
 ]
 
 
-def check_ip_address(node):
+def check_ip_address(node, show_result=False):
     """
     Функция проверяет является ли полученная строка ip-адресом.
     В случае соответствия возвращает объект-ip_address,
     или вызывает исключение с соответствующим сообщением.
     :param node (str) - строка переданная для проверки
+    :param show_result - bool переключатель вывода сообщений
     :return ip_address или exception
     """
     try:
         ip_v4 = ip_address(node)
-        print(f'{node} - корректный ip-адрес')
+        if show_result:
+            print(f'{node} - корректный ip-адрес')
     except ValueError:
         raise Exception(f'{node} - не являтеся ip-адресом')
     return ip_v4
@@ -57,7 +59,7 @@ def host_ping(node_list, show_result=False):
     """
 
     print(text2art('---IP-checker---'))
-    print('\n', 'Программа проверки доступности узлов', '\n', '=' * 50, '\n', )
+    print('\n', 'Программа проверки доступности IP-адресов', '\n', '=' * 50, '\n', )
 
     # Словарь с результатами проверки узлов
     result = {
@@ -69,7 +71,8 @@ def host_ping(node_list, show_result=False):
         try:
             ipv4 = check_ip_address(node)
         except Exception as e:
-            print(f'{e}, будет проверен как доменное имя')
+            if show_result:
+                print(f'{e}, будет проверен как доменное имя')
             ipv4 = node
 
         param = '-n' if platform.system().lower() == 'windows' else '-c'
@@ -88,8 +91,8 @@ def host_ping(node_list, show_result=False):
         if show_result:
             print(report)
 
+    print('\n', 'Результаты проверки:', '\n', '=' * 50, '\n', )
     if show_result:
-        print('\n', 'Результаты проверки:', '\n', '=' * 50, '\n', )
         pprint(result)
     return result
 

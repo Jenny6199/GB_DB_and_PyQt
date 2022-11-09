@@ -12,15 +12,17 @@
 from task_1 import check_ip_address, host_ping
 
 
-def host_range_ping():
+def host_range_ping(show_result=True):
     """
     Запрашивает адрес и количество необходимых доступных адресов
     Если в последнем октете есть возможность увеличивать номер адреса,
     то проверяет их доступность и возвращает список доступных адресов.
+    :param show_result - bool - выключатель вывода информационных сообщений.
     :return
     """
     while True:
-        ip_start = input('Начальный адрес:')
+        print('Будет выполнена последовательная проверка IP-адресов:')
+        ip_start = input('Введите начальный адрес:')
         try:
             ipv4_start = check_ip_address(ip_start)
             last_octet = int(ip_start.split('.')[3])
@@ -43,7 +45,7 @@ def host_range_ping():
 
     checking_hosts = []
     [checking_hosts.append(str(ipv4_start + el)) for el in range(int(number_of_node))]
-    return host_ping(checking_hosts)
+    return host_ping(checking_hosts, show_result)
 
 
 if __name__ == '__main__':

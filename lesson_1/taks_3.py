@@ -14,12 +14,17 @@ from task_2 import host_range_ping
 from tabulate import tabulate
 
 
-def host_range_ping_tab():
-    host_dictionary = host_range_ping()
+def host_range_ping_tab(show_result=False):
+    """
+    Функция обеспечивает аккуратный вывод на дисплей
+    результат работы функции host_range_ping используя модуль tabulate
+    :param show_result - bool - выключатель вывода текущих сообщений
+    """
+    host_dictionary = host_range_ping(show_result)
     print(tabulate(
         [host_dictionary],
         headers='keys',
-        tablefmt='pipe',
+        tablefmt='heavy_grid',
         stralign='center',
         maxheadercolwidths=[50, 50],
         maxcolwidths=[15, 15])
